@@ -5,21 +5,20 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import pack.jdbc.DBConn;
+import pack.dto.DataBean;
 
 public class FUO {
 	
-	public String[] rtnData = new String[6];
-	
-	public boolean mtdUpload(HttpServletRequest req) {
+	public boolean mtdUpload(HttpServletRequest req, DataBean dataBean) {
 		
 		boolean chk = false;
 
-		String saveFolder = "D:\\Java_Web_AI\\silsp\\jsp\\p09_Quiz_Upload_JDBC\\src\\main\\webapp\\fileStorage";
+		String saveFolder = "D:\\Java_Web_AI\\silsp\\jsp_FileStorage";
 		int maxSize = 10*1024*1024;   // 10MByte 까지 최대 업로드 허용
 		String encType = "UTF-8";
-
 
 		String subject = "";
 		String content = "";
@@ -62,12 +61,12 @@ public class FUO {
 			System.out.println("fileType : " + fileType);
 			System.out.println("fileSize : " + fileSize);
 
-			rtnData[0] = subject;
-			rtnData[1] = content;
-			rtnData[2] = originalFile;
-			rtnData[3] = uploadFile;
-			rtnData[4] = fileType;
-			rtnData[5] = fSize;
+			dataBean.setSubject(subject);
+			dataBean.setContent(content);
+			dataBean.setOriginalFile(originalFile);
+			dataBean.setUploadFile(uploadFile);
+			dataBean.setFileType(fileType);
+			dataBean.setFileSize(fileSize);
 			
 			chk = true;
 		} catch (IOException e ) {
@@ -76,5 +75,9 @@ public class FUO {
 		
 		return chk; 
 	}
-
 }
+
+
+	
+
+

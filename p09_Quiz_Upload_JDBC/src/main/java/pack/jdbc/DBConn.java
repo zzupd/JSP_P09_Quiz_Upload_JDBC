@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import pack.dto.DataBean;
+
 public class DBConn {
 	// DAO
 	private Connection conn = null;
@@ -49,7 +51,7 @@ public class DBConn {
 	
 	
 	// 입력용 메서드 시작
-	public boolean mtdInsert(String[] rtnData, HttpServletRequest req) {
+	public boolean mtdInsert(HttpServletRequest req, DataBean dataBean) {
 		
 //		rtnData[0] = subject;
 //		rtnData[1] = content;
@@ -67,12 +69,12 @@ public class DBConn {
 			sql += "uploadFile, fileType, fileSize, remoteIP) ";
 			sql += "values (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, rtnData[0]);
-			pstmt.setString(2, rtnData[1]);
-			pstmt.setString(3, rtnData[2]);
-			pstmt.setString(4, rtnData[3]);
-			pstmt.setString(5, rtnData[4]);
-			pstmt.setInt(6, Integer.parseInt(rtnData[5]));
+			pstmt.setString(1, dataBean.getSubject());
+			pstmt.setString(2, dataBean.getContent());
+			pstmt.setString(3, dataBean.getOriginalFile());
+			pstmt.setString(4, dataBean.getUploadFile());
+			pstmt.setString(5, dataBean.getFileType());
+			pstmt.setInt(6, dataBean.getFileSize());
 			pstmt.setString(7, remoteIp);
 			int rtnCnt = pstmt.executeUpdate();
 			if(rtnCnt == 1) {
